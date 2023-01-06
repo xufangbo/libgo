@@ -66,6 +66,12 @@
     "typeindex": "cpp",
     "typeinfo": "cpp",
     "random": "cpp",
-    "string": "cpp"
+    "string": "cpp",
+    "bit": "cpp",
+    "map": "cpp",
+    "set": "cpp",
+    "iterator": "cpp",
+    "memory_resource": "cpp",
+    "variant": "cpp"
   }
 }

@@ -1,3 +1,4 @@
+# set(BOOST_LIBRARYDIR /usr/lib)
 
 if (NOT Boost_FOUND)
     set(Boost_USE_STATIC_LIBS        ON)

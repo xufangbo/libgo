@@ -1,23 +1,24 @@
 /************************************************
  * libgo sample1
 *************************************************/
+#include <iostream>
 #include "coroutine.h"
 #include "win_exit.h"
 #include <stdio.h>
 #include <thread>
 
-void foo()
-{
-    printf("function pointer\n");
+void foo(){
+     std::cout << "tid: " << std::this_thread::get_id() << " function pointer" << std::endl; 
 }
 
 struct A {
-    void fA() { printf("std::bind\n"); }
-    void fB() { printf("std::function\n"); }
+    void fA() { std::cout << "tid: " << std::this_thread::get_id() << " std::bind" << std::endl; }
+    void fB() { std::cout << "tid: " << std::this_thread::get_id() << " std::function" << std::endl; }
 };
 
-int main()
-{
+int main(){
+    std::cout << "mid: " << std::this_thread::get_id() << std::endl;
+
     //----------------------------------
     // 使用关键字go创建协程, go后面可以使用:
     //     1.void(*)()函数指针, 比如:foo.
@@ -27,7 +28,7 @@ int main()
     go foo;
 
     go []{
-        printf("lambda\n");
+        std::cout << "tid: " << std::this_thread::get_id() << " lambda" << std::endl;
     };
 
     go std::bind(&A::fA, A());
@@ -38,7 +39,7 @@ int main()
     // 也可以使用go_stack创建指定栈大小的协程
     //   创建拥有10MB大栈的协程
     go co_stack(10 * 1024 * 1024) []{
-        printf("large stack\n");
+         std::cout << "tid: " << std::this_thread::get_id() << " large stack" << std::endl;
     };
 
     // 协程创建以后不会立即执行，而是暂存至可执行列表中，等待调度器调度。
@@ -75,7 +76,7 @@ int main()
 
     // 在新创建的调度器上创建一个协程
     go co_scheduler(sched) []{
-        printf("run in my scheduler.\n");
+        std::cout << "tid: " << std::this_thread::get_id() << " run in my scheduler." << std::endl;
     };
 
     co_sleep(100);
