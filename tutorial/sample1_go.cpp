@@ -17,6 +17,7 @@ struct A {
 };
 
 int main(){
+
     std::cout << "mid: " << std::this_thread::get_id() << std::endl;
 
     //----------------------------------
@@ -45,6 +46,8 @@ int main(){
     // 协程创建以后不会立即执行，而是暂存至可执行列表中，等待调度器调度。
     // co_sched是默认的协程调度器，用户也可以使用自创建的协程调度器。 
     // 当仅使用一个线程进行协程调度时, 协程地执行会严格地遵循其创建顺序.
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::cout << "ready to start schedue ..." << std::endl;
 
     // 仅使用主线程调度协程.
     // co_sched.Start();
@@ -57,10 +60,11 @@ int main(){
     // 可用线程数总是等于Start的第一个参数(0表示cpu核心数).
     // co_sched.Start(0, 1024);
 
-    // 如果不想让调度器卡住主线程, 可以使用以下方式:
+    // 如果不想让调度器卡住主线程, 可以使用以下方式:    
+
     std::thread t([]{ co_sched.Start(); });
     t.detach();
-    co_sleep(100);
+    co_sleep(3000);
     //----------------------------------
 
     //----------------------------------
